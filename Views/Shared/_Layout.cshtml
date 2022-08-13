@@ -46,13 +46,26 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
         function getFromApi() {
-                $.ajax({
-                    url: window.location.href + 'GetFormatedText',
-                    dataType: 'text'
-                }).done((data) => {
+                $.post(window.location.href + 'PostFormatedText', {text1: 'i to spróbujemy odwrócić', text2: 'i coś jeszcze'}, (data) => {
                     $("#p1").html(data);
-                }).fail(() => {
+                }, 'text').fail(() => {
                     $("#p1").html('nie udało się pobrać danych z api');
+                });
+        }
+
+        function getFromApi2() {
+            $.get(window.location.href + 'GetFormatedText', {data1: 'i to spróbujemy odwrócić', data2: 'ale przez get'}, (data) => {
+                    $("#p1").html(data);
+                }, 'text').fail(() => {
+                    $("#p1").html('nie udało się pobrać danych z api');
+                });
+        }
+
+        function getFromApi3() {
+            $.get(window.location.href + 'FormatSingleText', 'ciekawe co się stanie z pojedynczym tekstem', (data) => {
+                    $("#p1").html(data);
+                }, 'text').fail((jqXHR, textStatus) => {
+                    $("#p1").html(jqXHR.statusText);
                 });
         }
     </script>
